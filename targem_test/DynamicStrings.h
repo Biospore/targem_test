@@ -3,17 +3,17 @@
 
 class DynamicStrings
 {
+private:
 	char *str;
-	int len;
-public:
+	int len;	
+public:	
 	DynamicStrings();
 	DynamicStrings(const char* charObject);
 	DynamicStrings(DynamicStrings const& object);
 	DynamicStrings& operator=(const DynamicStrings& object);
-	DynamicStrings operator+(const DynamicStrings& right);
-
-	friend ostream& operator<<(ostream& os, const DynamicStrings s);
-	friend istream& operator>>(istream& is, const DynamicStrings s);
+	DynamicStrings operator+(const DynamicStrings& right);	
+	int getLength();
+	char* getContent();
 	~DynamicStrings();
 };
 
