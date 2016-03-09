@@ -1,8 +1,4 @@
 #include "DynamicStrings.h"
-#include <cstring>
-#include <iostream>
-
-using namespace std;
 
 DynamicStrings::DynamicStrings()
 {
@@ -74,18 +70,7 @@ DynamicStrings DynamicStrings::operator+(const DynamicStrings & right)
 	return temp;
 }
 
-int DynamicStrings::getLength()
-{
-	return len;
-}
-
-char * DynamicStrings::getContent()
-{
-	return str;
-}
-
 DynamicStrings::~DynamicStrings()
 {
 	delete[] str;	
 }
-
