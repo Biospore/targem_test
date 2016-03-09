@@ -2,22 +2,42 @@
 //
 
 #include "DynamicStrings.h"
-#include <iostream>
+#include <vector>
+#include <fstream>
 
 using namespace std;
 
-int main()
+int main(int argc, char* argv[])
 {
-	DynamicStrings ds = DynamicStrings("abra");
-	DynamicStrings ds1 = DynamicStrings("cadabra");
-	DynamicStrings ds2;
-	DynamicStrings ds3;
-	ds2 = ds;
-	ds3 = ds + ds1;		
-	cout << ds << '\n';
-	cout << ds2 << '\n';
-	cout << ds1<< '\n';
-	cout << ds3<< '\n';		
+	vector<DynamicStrings> strs;
+	ifstream inputfile;
+	if (argc < 2) 
+	{
+		cout << "Provide filename to program." << endl;
+		system("pause");
+		return 0;
+	}
+	inputfile.open(argv[1]);
+	if (!inputfile.is_open())
+	{
+		cout << "Some error occured while opening '"<< argv[1] << "' file!" << endl;
+		system("pause");
+		return 0;	
+	}	
+	DynamicStrings temp;
+	while (!inputfile.eof()) 
+	{
+		inputfile >> temp;
+		strs.push_back(temp);
+		temp = DynamicStrings();		
+	}	
+	/*
+	for (vector<DynamicStrings>::iterator it = strs.begin(); it != strs.end(); it++)
+	{
+		cout << *it << endl;
+	}
+	*/
+	
 	system("pause");
     return 0;
 }

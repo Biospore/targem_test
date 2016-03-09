@@ -17,7 +17,8 @@ public:
 	DynamicStrings(DynamicStrings const& object);
 	DynamicStrings& operator=(const DynamicStrings& object);
 	DynamicStrings operator+(const DynamicStrings& right);	
-	void stream_to(std::ostream& os) const { os << str; }
+	void stream_to(ostream& os) const { os << str; }	
+	friend istream & operator>>(istream & is, DynamicStrings & obj);
 	~DynamicStrings();
 };
 
@@ -26,4 +27,5 @@ inline ostream & operator<<(ostream & os, const DynamicStrings & obj)
 	obj.stream_to(os);
 	return os;
 }
+
 #endif

@@ -3,7 +3,7 @@
 DynamicStrings::DynamicStrings()
 {
 	len = 0;
-	str = nullptr;
+	str = new char[0];
 }
 
 DynamicStrings::DynamicStrings(const char * charObject)
@@ -73,4 +73,43 @@ DynamicStrings DynamicStrings::operator+(const DynamicStrings & right)
 DynamicStrings::~DynamicStrings()
 {
 	delete[] str;	
+}
+
+istream & operator>>(istream & is, DynamicStrings & obj)
+{	
+	int count = 30;
+	int readed = 0;
+	char symbol;
+	char* buf = new char[count];
+	delete obj.str;	
+	while (is.get(symbol) && symbol != '\n' && symbol != '\0')
+	{
+		buf[readed] = symbol;
+		readed++;		
+		if (readed == count - 1) 
+		{			
+			char* buf2 = new char[count];
+			for (int i = 0; i < count; i++)
+			{
+				buf2[i] = buf[i];
+			}
+			count += 30;
+			buf = new char[count];
+			for (int i = 0; i < count - 16; i++)
+			{
+				buf[i] = buf2[i];
+			}			
+			delete[] buf2;
+		}
+	}
+	
+	obj.str = new char[readed+1];
+	for (int i = 0; i < readed; i++)
+	{
+		obj.str[i] = buf[i];
+	}
+	delete[] buf;	
+	obj.str[readed] = '\0';
+	obj.len = strlen(obj.str);
+	return is;
 }
