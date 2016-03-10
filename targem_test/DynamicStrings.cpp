@@ -8,6 +8,7 @@ DynamicStrings::DynamicStrings()
 
 DynamicStrings::DynamicStrings(const char * charObject)
 {
+	//maybe cycle for all chars?...(until '\0')
 	len = strlen(charObject);
 	str = new char[len + 1];
 	for (int i = 0; i < len; i++)
@@ -68,6 +69,61 @@ DynamicStrings DynamicStrings::operator+(const DynamicStrings & right)
 	temp.str[temp.len] = '\0';
 	delete[] summStr;
 	return temp;
+}
+
+bool DynamicStrings::operator==(const DynamicStrings & object)
+{
+	if (len != object.len) 
+	{
+		return false;
+	}
+	for (int i = 0; i < len; i++)
+	{
+		if (tolower(str[i]) != tolower(object.str[i]))
+			return false;
+	}
+	return true;
+}
+
+bool DynamicStrings::operator!=(const DynamicStrings & object)
+{
+	return !(*this == object);
+}
+
+bool DynamicStrings::operator>(const DynamicStrings & object)
+{	
+	
+	for (int i = 0; i < len; i++)
+	{
+		if (tolower(str[i]) < tolower(object.str[i]))
+			return false;
+		if (tolower(str[i]) > tolower(object.str[i]))
+			return true;
+	}	
+	return false;
+}
+
+bool DynamicStrings::operator<(const DynamicStrings & object)
+{
+	if (!(*this > object || *this == object)) 
+	{
+		return true;
+	}
+	return false;
+}
+
+bool DynamicStrings::operator<=(const DynamicStrings & object)
+{
+	if (*this < object || *this == object)
+		return true;
+	return false;
+}
+
+bool DynamicStrings::operator>=(const DynamicStrings & object)
+{
+	if (*this > object || *this == object)
+		return true;
+	return false;
 }
 
 DynamicStrings::~DynamicStrings()

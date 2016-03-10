@@ -7,9 +7,39 @@
 
 using namespace std;
 
+//bad practice
+less<> cmp;
+
+void ds_qsort(vector<DynamicStrings>::iterator dsstart, vector<DynamicStrings>::iterator dsend)
+{
+	ptrdiff_t right = (dsend - dsstart) - 1;
+	ptrdiff_t left = 0;
+
+	if (right > 0)
+	{
+		auto ptr = dsstart[left + (right - left) / 2];
+		ptrdiff_t i = left;
+		ptrdiff_t j = right;
+
+		while (i <= j)
+		{
+			while (cmp(dsstart[i], ptr))
+				++i;
+
+			while (cmp(ptr, dsstart[j]))
+				--j;
+			if (i <= j)
+				swap(dsstart[i++], dsstart[j--]);
+		}
+
+		ds_qsort(dsstart, dsstart + j + 1);
+		ds_qsort(dsstart + i, dsend);
+	}
+};
+
 int main(int argc, char* argv[])
 {
-	vector<DynamicStrings> strs;
+	vector<DynamicStrings> dsvector;
 	ifstream inputfile;
 	if (argc < 2) 
 	{
@@ -28,16 +58,15 @@ int main(int argc, char* argv[])
 	while (!inputfile.eof()) 
 	{
 		inputfile >> temp;
-		strs.push_back(temp);
+		dsvector.push_back(temp);
 		temp = DynamicStrings();		
 	}	
-	/*
-	for (vector<DynamicStrings>::iterator it = strs.begin(); it != strs.end(); it++)
+	
+	ds_qsort(dsvector.begin(), dsvector.end());
+	for (vector<DynamicStrings>::reverse_iterator it = dsvector.rbegin(); it != dsvector.rend(); it++)
 	{
 		cout << *it << endl;
 	}
-	*/
-	
 	system("pause");
     return 0;
 }
